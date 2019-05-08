@@ -1,0 +1,47 @@
+def game(myDamage, myHP, mySPD, starterObj, starterName, enemyDamage, enemyHP, enemySPD):
+    fainted = False
+    if myHP <= 0 or enemyHP <= 0:
+        fainted = True
+    #print("Fainted: " + str(fainted))
+
+    buff = 3
+    potionUnused = True
+
+    options = ['fight', 'item', 'bag']
+
+    for option in options:
+        cprint(figlet_format(option, font="graffiti"), 'white')
+    print("enter fight, debuff, or bag as a string")
+    choice = input().lower() # use input.lower to standardize stdin
+
+    # for user:
+
+    #while not Fainted:
+    if choice == "fight":
+        print(str(enemyHP))
+        enemyHP -= myDamage
+        print(str(enemyHP))
+    elif choice == "debuff":
+        print(str(enemyDamage))
+        if starterName == "squirtle":
+            myDamage += buff
+        else: # this possibility must be Charmander or Bulbasaur, because both have Growl
+            enemyDamage -= buff
+    elif choice == "bag" and potionUnused is True:
+        print("Potion: 1. Use Potion? Enter yes or no as a string.")
+        use = str(input())
+        if use == "yes":
+            myHP += 20
+            potionUnused = False
+        elif use == 'no':
+            print("fight or debuff?")
+            choice2 = str(input()).lower()
+            if choice2 == "fight":
+                enemyHP -= myDamage
+            else:
+                if starterName == "squirtle":
+                    myDamage += buff
+                else:
+                    enemyDamage -= buff
+    else:
+        print("pick a valid option for your POKEMON =)")
