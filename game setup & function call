@@ -128,3 +128,5 @@ def game(starterNum, starterArray, starterClassArray, list):
     print(list[rivalNum])
 
     gameSetup(damage, hp, spd, starterString, rival_damage, rival_hp, rival_spd, rivalStarterString)
+
+game(starter_choice, starters, starterClasses, images)
