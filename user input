@@ -1,0 +1,35 @@
+print("OAK: Hello there! Welcome to the world of POKEMON! My name is OAK! People call me the POKEMON PROF!\n \
+This world is inhabited by creatures called POKEMON! For some people, POKEMON are pets. Others use them for fights.\n \
+Myself...I study POKEMON as a profession. First, what is your name?")
+player = input()
+
+print("\nOAK: Right! So your name is " + player + "! This is my grandson. He's been your rival since you were a baby. \
+ ...Erm, what is his name again?")
+rival = input()
+
+print("\nOAK: That's right! I remember now! His name is %s! %s! Your very own POKEMON legend is about to unfold! \
+A world of dreams and adventures with POKEMON awaits! Let's go!" % (rival, player))
+
+print("Choose your starter! Enter 0 for Charmander, 1 for Squirtle, and 2 for Bulbasaur.")
+
+starters = ["Charmander", "Squirtle", "Bulbasaur"]
+starterClasses = [Charmander, Squirtle, Bulbasaur]
+colors = ["red", "blue", "green"]
+
+for starter in range(len(starters)):
+    cprint(figlet_format(starters[starter], font="graffiti"), colors[starter])
+
+starter_choice = int(input())
+bad_starter_input = False
+
+if starter_choice != 0 and starter_choice != 1 and starter_choice != 2:
+    bad_starter_input = True
+
+while bad_starter_input:
+    print("\nThat POKEMON isn't a starter POKEMON!")
+    print("Pick a Johto starter =)")
+    starter_choice = int(input())
+
+    if starter_choice is 0 or starter_choice is 1 or starter_choice is 2:
+        bad_starter_input = False
+        
