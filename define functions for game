@@ -1,0 +1,49 @@
+print("\n%s: I'll take this one, then!" % rival)
+print("%s! Let's check out our POKEMON! Come on, I'll take you on!" % player)
+
+options = ['fight', 'item', 'bag']
+
+for option in options:
+    cprint(figlet_format(option, font="graffiti"), 'white')
+
+images = [char_image, squirt_image, bulb_image]
+
+def attack(enemy_hp, damage):
+    enemy_hp -= damage
+    return enemy_hp
+
+def debuff(starterName, myDamage, enemyDamage):
+    buff = 3
+
+    if starterName == "Squirtle":
+        myDamage += buff
+        return myDamage
+    else:
+        enemyDamage -= buff
+        if enemyDamage <= buff:
+         enemyDamage = 0
+        return enemyDamage
+
+def fightMethod(starterName, myDamage, enemyHP, enemyDamage):
+    print("fight, debuff, or bag?")
+    choice2 = str(input())
+
+    badChoice2 = False
+
+    if choice2 != "fight" and choice2 != "debuff" and choice2 != "bag":
+        badChoice2 = True
+
+    while badChoice2:
+        if choice2 == "fight":
+            enemyHP = attack(enemyHP, myDamage)
+            return enemyHP
+        elif choice2 == "debuff":
+            if starterName == "Squirtle":
+                myDamage = debuff(starterName, myDamage, enemyDamage)
+                return myDamage
+            else:
+                enemyDamage = debuff(starterName, myDamage, enemyDamage)
+                return enemyDamage
+        else:
+            print("Choose a valid move =)")
+            choice2 = str(input())
