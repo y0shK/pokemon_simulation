@@ -1,0 +1,21 @@
+from termcolor import cprint
+from pyfiglet import figlet_format
+import random
+
+class Charmander:
+    def __init__(self):
+        self.damage = 13
+        self.hp = 39
+        self.spd = 65
+
+class Squirtle:
+    def __init__(self):
+        self.damage = 11
+        self.hp = 44
+        self.spd = 43
+
+class Bulbasaur:
+    def __init__(self):
+        self.damage = 10
+        self.hp = 45
+        self.spd = 45
