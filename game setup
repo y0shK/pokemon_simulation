@@ -1,0 +1,130 @@
+def gameSetup(myDamage, myHP, mySPD, starterName, enemyDamage, enemyHP, enemySPD, rivalName):
+    notFainted = True
+
+    potionUnused = True
+    turnCount = 0
+    myCrit = random.randint(0, 8)
+    enemyCrit = random.randint(0, 8)
+    critChances = [myCrit, enemyCrit]
+    damages = [myDamage, enemyDamage]
+
+    options = ['fight', 'item', 'bag']
+
+    for option in options:
+        cprint(figlet_format(option, font="graffiti"), 'white')
+
+    while notFainted:
+        print("\nenter fight, debuff, or bag as a string")
+        choice = input()
+
+        for crit in range(len(critChances)):
+            if critChances[crit] == 0:
+                 damages[crit] *= 2
+
+        if choice == "fight":
+            enemyHP = attack(enemyHP, myDamage)
+        elif choice == "debuff":
+            if starterName == "Squirtle":
+                myDamage = debuff(starterName, myDamage, enemyDamage)
+            else:
+                enemyDamage = debuff(starterName, myDamage, enemyDamage)
+        elif choice == "bag" and potionUnused:
+            print("Potion: 1. Use Potion? Enter yes or no as a string.")
+            use = str(input())
+            if use == "yes":
+                myHP += 20
+                potionUnused = False
+            elif use == 'no':
+                while use == "no":
+                    fightMethod(starterName, myDamage, enemyHP, enemyDamage)
+                    print("Want to use a Potion? Enter yes or no as a string.")
+                    use = str(input())
+
+                    if use == "yes":
+                        myHP += 20
+                        potionUnused = False
+
+        elif choice == "bag" and potionUnused != True:
+            print("Potion: 0. Don't get criticaled ;)")
+            fightMethod(starterName, myDamage, enemyHP, enemyDamage)
+        else:
+            print("pick a valid option for your POKEMON =)")
+            fightMethod(starterName, myDamage, enemyHP, enemyDamage)
+
+        # for cpu: if turn mod 3 == 0, then debuff, otherwise attack
+        if turnCount % 3 == 0:
+            if rivalName == "Squirtle":
+                enemyDamage = debuff(rivalName, enemyDamage, myDamage)
+            else:
+                myDamage = debuff(rivalName, enemyDamage, myDamage)
+
+            debuff(rivalName, enemyDamage, myDamage)
+        else:
+            myHP = attack(myHP, enemyDamage)
+
+        if myHP <= 0:
+            myHP = 0
+        elif enemyHP <= 0:
+            enemyHP = 0
+
+        print("\nHP: %s" % myHP)
+        print("Rival HP: %s" % enemyHP)
+
+        turnCount += 1
+
+        if myHP <= 0 or enemyHP <= 0:
+            if myHP > enemyHP:
+                print("You won, %s. Smell ya later!" % player)
+            elif enemyHP > myHP:
+                print("I won! My POKEMON is better! Smell ya later, %s!" % player)
+            else:
+                print("it's not a win if both POKEMON are dead ;)")
+            notFainted = False
+
+def game(starterNum, starterArray, starterClassArray, list):
+    # checking the index of the starter to determine who picked what
+    if starterNum < 2: # Charmander = 0, so if statement needs to wrap
+        rivalNum = (starterNum+1)
+    elif starterNum is 2:
+        rivalNum = 0
+    else:
+        print("Pick a Johto starter =)")
+
+    starterString = starterArray[starterNum] # a string saying "Charmander," etc.
+    rivalStarterString = starterArray[rivalNum] # corresponding rival string
+
+    starterClass = starterClassArray[starterNum] # pointer to actual class w/ self definitions
+    rivalClass = starterClassArray[rivalNum] # corresponding rival class
+
+    #creating variables so that instances of classes can be created below
+    starterObj = starterClass()
+    rivalObj = rivalClass()
+    print(str(starterObj))
+    print(str(rivalObj))
+    print(str(starterObj.hp))
+    print(str(rivalObj.hp))
+
+    # instantiate each POKEMON with its respective stats
+    elements_string = ["damage", "HP", "spd"]
+
+    damage = starterObj.damage
+    hp = starterObj.hp
+    spd = starterObj.spd
+    starterElements = [damage, hp, spd]
+    for element in range (0, 3):
+        print(elements_string[element] + ": " + str(starterElements[element]))
+
+    rival_damage = rivalObj.damage
+    rival_hp = rivalObj.hp
+    rival_spd = rivalObj.spd
+    rivalElements = [rival_damage, rival_hp, rival_spd]
+    for element in range (0, 3):
+        print(elements_string[element] + ": " + str(rivalElements[element]))
+
+    # print which starter was picked and corresponding images
+    print(str(starterString))
+    print(list[starterNum])
+    print(str(rivalStarterString))
+    print(list[rivalNum])
+
+    gameSetup(damage, hp, spd, starterString, rival_damage, rival_hp, rival_spd, rivalStarterString)
